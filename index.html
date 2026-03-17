@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Audi Plano Sales App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial; padding: 20px; background:#111; color:#fff; }
+    input, select { padding:10px; margin:5px; width:100%; border-radius:10px; border:none; }
+    button { padding:12px; margin-top:10px; width:100%; border:none; border-radius:10px; background:#0a84ff; color:white; font-weight:bold; }
+    .card { background:#1a1a1a; padding:20px; border-radius:20px; margin-top:15px; }
+  </style>
+</head>
+<body>
+
+<h2>Audi Plano Needs Analysis</h2>
+
+<div class="card">
+  <input id="budget" placeholder="Budget ($)">
+  <input id="payment" placeholder="Monthly Payment ($)">
+  
+  <select id="body">
+    <option value="Any">Body Style</option>
+    <option>SUV</option>
+    <option>Sedan</option>
+  </select>
+
+  <button onclick="match()">Find Best Match</button>
+</div>
+
+<div id="result" class="card"></div>
+
+<script>
+const inventory = [
+  {name:"2023 Audi Q5", price:42000, monthly:650, type:"SUV"},
+  {name:"2022 Audi A5", price:35000, monthly:520, type:"Sedan"},
+  {name:"2024 Audi Q7", price:58000, monthly:850, type:"SUV"}
+];
+
+function match() {
+  let budget = document.getElementById("budget").value;
+  let payment = document.getElementById("payment").value;
+  let body = document.getElementById("body").value;
+
+  let best = inventory.filter(v =>
+    (!budget || v.price <= budget) &&
+    (!payment || v.monthly <= payment) &&
+    (body === "Any" || v.type === body)
+  )[0];
+
+  document.getElementById("result").innerHTML =
+    best ? `<h3>${best.name}</h3>
+    <p>Price: $${best.price}</p>
+    <p>Payment: $${best.monthly}/mo</p>`
+    : "No match found";
+}
+</script>
+
+</body>
+</html>
